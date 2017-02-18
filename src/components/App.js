@@ -1,26 +1,31 @@
 import React from 'react';
+import Header from './Header';
+import Content from './Content';
 
-//CamelCase
 class App extends React.Component {
-  sayHey(){
-    alert('Hey!');
-  }
   render(){
-    let text = "Dev-Server";
-    let pStyle = {
-      color : 'aqua',
-      backgroundColor : 'black'
-    }
     return (
       <div>
-        <h1>Hello React Skeleton</h1>
-        <h2> Welcome to {text}</h2>
-        <button onClick={this.sayHey}>Click Me</button>
-        <p style = {pStyle}>{1 == 1 ? 'True':'False'}</p>
-        { /* comments */ }
+        <Header title={ this.props.headerTitle }/>
+        <Content title={ this.props.contentTitle }
+                  body={ this.props.contentBody }/>
       </div>
     );
   }
 }
+
+//Case 1
+App.defaultProps = {
+  headerTitle : 'Default header',
+  contentTitle : 'Default contentTitle',
+  contentBody : 'Default contentBody'
+}
+
+//Validator Test
+// App.defaultProps = {
+//   headerTitle : 'Default header',
+//   contentTitle : 5, // not string
+//   contentBody : undefined //isRequired
+// }
 
 export default App;
