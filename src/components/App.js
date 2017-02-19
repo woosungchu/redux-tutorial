@@ -1,50 +1,28 @@
 import React from 'react';
-import Header from './Header';
-import Content from './Content';
-import RandomNumber from './RandomNumber';
+import ContactInfo from './ContactInfo';
 
 class App extends React.Component {
-  constructor(props){
-    super(props);
-
-    this.state = {
-      value : Math.round(Math.random()*100)
-    };
-
-    this.updateValue = this.updateValue.bind(this);
+  render(){
+    return (
+      <Contacts/>
+    )
   }
+}
 
-  updateValue(randomValue){
-    this.setState({
-      value: randomValue
-    })
-  }
-
+class Contacts extends React.Component {
   render(){
     return (
       <div>
-        <Header title={ this.props.headerTitle }/>
-        <Content title={ this.props.contentTitle }
-                  body={ this.props.contentBody }/>
-        <RandomNumber number={this.state.value}
-                      onUpdate={this.updateValue}/>
+          <h1>Contacts</h1>
+          <ul>
+            <ContactInfo name="Abet" phone="010-0000-0001"/>
+            <ContactInfo name="Betty" phone="010-0000-0002"/>
+            <ContactInfo name="Chalie" phone="010-0000-0003"/>
+            <ContactInfo name="David" phone="010-0000-0004"/>
+          </ul>
       </div>
-    );
+    )
   }
 }
-
-//Case 1
-App.defaultProps = {
-  headerTitle : 'Default header',
-  contentTitle : 'Default contentTitle',
-  contentBody : 'Default contentBody'
-}
-
-//Validator Test
-// App.defaultProps = {
-//   headerTitle : 'Default header',
-//   contentTitle : 5, // not string
-//   contentBody : undefined //isRequired
-// }
 
 export default App;
