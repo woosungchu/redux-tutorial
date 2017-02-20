@@ -13,3 +13,4 @@
 ####Refrences
 - [Setting Redux dev-env](https://velopert.com/814)
 - [React Tutorial List ](https://velopert.com/reactjs-tutorials)
+- [Redux Basic](https://velopert.com/1225)
