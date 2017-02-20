@@ -22,7 +22,11 @@ class Contacts extends React.Component {
         {name : "David", phone : "010-0000-0004"},
         {name : "Etest", phone : "010-0000-0005"}
       ],
-      selectedKey: -1
+      selectedKey: -1,
+      selected: {
+        name: "",
+        phone: ""
+      }
     }
   }//constructor
 
@@ -30,13 +34,18 @@ class Contacts extends React.Component {
     if(key==this.state.selectedKey){
       console.log("key selected cancelled");
       this.setState({
-        selectedKey:-1
+        selectedKey:-1,
+        selected: {
+          name:"",
+          phone:""
+        }
       });
       return;
     }
 
     this.setState({
-      selectedKey:key
+      selectedKey:key,
+      selected: this.state.contactData[key]
     });
     console.log(key+ " is selected");
   }
@@ -52,6 +61,24 @@ class Contacts extends React.Component {
       }
     });
     this.setState(newState);
+  }
+
+  _editContact(name,phone){
+    this.setState({
+      contactData: update(
+        this.state.contactData,
+        {
+          [this.state.selectedKey]: {
+            name: {$set:name},
+            phone: {$set:phone}
+          }
+        }
+      ),//contactData
+      selected: {
+        name: name,
+        phone: phone
+      }
+    });
   }
 
   _removeContact(){
@@ -90,6 +117,9 @@ class Contacts extends React.Component {
           </ul>
           <ContactCreator onInsert={this._insertContact.bind(this)}/>
           <ContactRemover onRemove={this._removeContact.bind(this)}/>
+          <ContactEditor onEdit={this._editContact.bind(this)}
+                          isSelected={(this.state.selectedKey != -1)}
+                          contact={this.state.selected}/>
       </div>
     )
   }
@@ -128,6 +158,53 @@ class ContactCreator extends React.Component {
           <input type="text" name="phone" placeholder="phone"
             value={this.state.phone} onChange={this.handleChange.bind(this)} />
           <button onClick={this.handleClick.bind(this)}>Insert</button>
+        </p>
+      </div>
+    );
+  }
+}
+
+class ContactEditor extends React.Component {
+  constructor(props){
+    super(props);
+
+    this.state = {
+      name : "",
+      phone : ""
+    };
+  }
+
+  componentWillReceiveProps(nextProps){
+    this.setState({
+      name: nextProps.contact.name,
+      phone: nextProps.contact.phone
+    })
+  }
+
+  handleChange(e){
+    var nextState = {};
+    nextState[e.target.name] = e.target.value;
+    this.setState(nextState);
+  }
+
+  handleClick(){
+    if(!this.props.isSelected){
+      console.log("contact not selected");
+      return;
+    }
+
+    this.props.onEdit(this.state.name, this.state.phone);
+  }
+
+  render(){
+    return (
+      <div>
+        <p>
+          <input type="text" name="name" placeholder="name"
+            value={this.state.name} onChange={this.handleChange.bind(this)} />
+          <input type="text" name="phone" placeholder="phone"
+            value={this.state.phone} onChange={this.handleChange.bind(this)} />
+          <button onClick={this.handleClick.bind(this)}>Edit</button>
         </p>
       </div>
     );
