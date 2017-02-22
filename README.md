@@ -9,6 +9,28 @@
     │   │   └── App.js    # App 컴포넌트
     │   └── index.js      # Webpack Entry point
     └── webpack.config.js # Webpack 설정파일
+    
+####Redux Structure
+
+	Provider
+	├── Store
+	│	 └── combineReducer
+	│		  ├── reducer
+	│		  │ 	└── switch(action.type)
+	│		  │		 ├── action
+	│		  │		 ├── action
+	│		  │		 └── action
+	│		  └── reducer
+	└── Root-Component
+		 ├── Component
+		 │	  └── connect
+		 │		├── class
+		 │		└── mapDispatchToProps
+		 ├── Component
+		 │	  └── connect
+		 │		├── class
+		 │		└── mapStateToProps
+		 └── Component
 
 ####Refrences
 - [Setting Redux dev-env](https://velopert.com/814)
